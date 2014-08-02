@@ -11,8 +11,10 @@
             
             <div id="grid-input">    
                 <span>Grid Size</span>
-                <input type="text" id="gridsize" value="10" />
-            </div>            
+                <input type="text" id="gridsize" value="20" />
+            </div>   
+            
+            <button id="startAnimation">start</button>
             
             <ul class="cf" id="nav">
                 <li><a id="noOfGrids" href="javascript: void 0">50</a></li>
@@ -29,8 +31,10 @@
 
         <script>
             var 
-                canvas          = document.querySelector('#gameCanvas')
-            ,   gridSize       = document.querySelector('#gridsize')
+                canvas              = document.querySelector('#gameCanvas')
+                startAnimation      = document.querySelector('#startAnimation')
+                animationStarted    = false
+            ,   gridSize            = document.querySelector('#gridsize')
             
             ;
 
@@ -48,7 +52,20 @@
                 }
             }, false );
 
-            $$.start ();
+            
+            $$.registerListener( startAnimation , 'click', function ( e ) {
+                
+                if (!animationStarted) {
+                    this.innerHTML = 'stop';
+                    animationStarted = $$.start ();
+                }
+                else {
+                    this.innerHTML = 'start';
+                    animationStarted = false;
+                    $$.stop();
+                }
+            }, false );
+            
             
         </script>
     </body>

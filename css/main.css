@@ -51,7 +51,7 @@
 #grid-input {
     float: left;
     height: 44px;
-    margin-right: 10%; 
+    margin-right: 1%; 
     padding-top: 10px;
 }
 
@@ -79,6 +79,18 @@
             width: 40px;
         }
 
+#startAnimation {
+    border: 1px solid;
+    border-color: #cdced0 #c5c6c8 #b6b7b9;
+    background: #f6f7f8;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    float: left;
+    font-size: 11px;
+    font-weight: 200;
+    height: 20px;
+    margin: 12px 30px 0 0 ;
+    width: 40px;
+}
 
 #gameCanvas {
     width: 99%;

@@ -21,8 +21,10 @@ var $$ = $$ || null;  //framework name '$$'
     ,   registerListener = Function.prototype.call.bind ( AddListener )
     ,   timeout          = null
     ,   _el              = null
-    ,   _life            = {}
+    ,   _life            = []
+    ,   _cell            = {}
     ,   _options         = { }
+    ,   _timeout         = 0
     ;
     
     Object.prototype.addCell = function ( cellId, cellElement) {
@@ -45,15 +47,81 @@ var $$ = $$ || null;  //framework name '$$'
         init        :   init,
         reinit      :   reinit,
         start       :   start,                                              // Animation Start function
+        stop        :   function () {                                       // Animation STOP function
+            clearInterval(_timeout);
+        },
         registerListener :   registerListener
     }
     
     
-     function start ( ) {                                                   // Animation Start implementation
-//        timeout = setInterval( function () {
-//            
-//        }, 400)
+    function start ( ) {                                                   // Animation Start implementation
+        var count;
         
+        _timeout = setInterval( function () {
+//            try {
+                for ( var X = 1; X < _options.gridSize-1 ; X++ ) {
+                    for ( var Y = 1; Y < _options.gridSize-1 ; Y++ )  {
+                        count = countNeighbors ( X, Y );
+                        
+                        if ( count < 2 || count > 3 ) {
+
+                            _life [X][Y] = 0;
+                            (_cell[ 'td-' + X + ',' + Y]).setAttribute('class', '');
+
+                        } else {
+                            
+                            _life [X][Y] = 1;
+                            (_cell[ 'td-' + X + ',' + Y]).setAttribute('class', 'active');
+                            
+                        }
+                    }
+                }
+//            }
+//            catch ( error ) {
+//                clearInterval( timeout );
+//            }
+        }, 400);
+        
+        return true;
+    }
+    
+    
+    function countNeighbors ( X, Y ) {
+        var count;
+        if ( X == 0 ) {
+            count = 
+            //CELLS on TOP ROW 
+            _life [X-1][Y-1]
+        +   _life [X-1][Y]
+        +   _life [X-1][Y+1]
+
+        //CELLS on SAME ROW
+        +   _life [X][Y-1]
+        +   _life [X][Y+1]
+        
+        //CELLS on BOTTOM ROW
+        +   _life [X+1][Y-1]
+        +   _life [X+1][Y]
+        +   _life [X+1][Y+1]
+        
+        }
+        count = 
+            //CELLS on TOP ROW 
+            _life [X-1][Y-1]
+        +   _life [X-1][Y]
+        +   _life [X-1][Y+1]
+
+        //CELLS on SAME ROW
+        +   _life [X][Y-1]
+        +   _life [X][Y+1]
+        
+        //CELLS on BOTTOM ROW
+        +   _life [X+1][Y-1]
+        +   _life [X+1][Y]
+        +   _life [X+1][Y+1]
+        
+        ;
+        return count;
     }
     
     function reinit ( gridSize ) {
@@ -92,18 +160,25 @@ var $$ = $$ || null;  //framework name '$$'
         for ( i = 0; i < _options.gridSize ; i++ ) {
             
             var tr = doc[cel]('tr');
+            _life [ i ] = new Array( _options.gridSize );
             
             for ( j = 0; j < _options.gridSize ; j++ ) {
                 var td = doc[cel] ( 'td' );
                 td.setAttribute( 'id', 'td-' + i + ',' + j );
                 tr.appendChild ( td );
-                _life [ i +',' + j ] = 0;
-                _life [ 'td-' + i +',' + j ] = td;
+
+                _life [ i ][ j ] = 0;
+                _cell [ 'td-' + i +',' + j ] = td;
                 
                 
                 registerListener( td, 'click', function () {
                     this.setAttribute('class', 'active');
-                    _life [ i +',' + j ] = 1;
+
+                    var id = this.getAttribute('id').split('td-')[1];
+                    var X = id.split(',')[0] * 1;
+                    var Y = id.split(',')[1] * 1;
+                    
+                    _life [ X ][ Y ] = 1;
 //                    console.log(_life);
                 }, false);
                 
@@ -112,6 +187,7 @@ var $$ = $$ || null;  //framework name '$$'
             table.appendChild ( tr );
         }
         
+        _el.innerHTML = "";
         _el.appendChild(table);
         
     } //drawTable ends
