@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app>
+    <head>
+        <title>Game of Life</title>
+        <link rel="stylesheet" href="css/main.css" />
+    </head>
+    <body>
+        <div class="cf" id="header">
+            <h1 id="icon">Game of Life</h1>
+            
+            
+            <div id="grid-input">    
+                <span>Grid Size</span>
+                <input type="text" id="gridsize" value="30" />
+            </div>            
+            
+            <ul class="cf" id="nav">
+                <li><a id="noOfGrids" href="javascript: void 0">50</a></li>
+                <li><a id="timeElapsed" href="javascript: void 0">Time Elapsed</a></li>
+                <li><a href="javascript: void 0">Some Link</a></li>
+                <li><a href="javascript: void 0">Some other link</a></li>
+            </ul>
+        </div>
+        
+        <div id="gameCanvas"></div>
+        
+<!--        <script async src="js/plugin.js"></script> NOT WORTH IT -->
+        <script src="js/plugin.js"></script>
+
+        <script>
+            var 
+                canvas          = document.querySelector('#gameCanvas')
+            ,   gridSize       = document.querySelector('#gridsize')
+            
+            ;
+
+
+            $$.init ( canvas, {
+                gridSize            : gridSize.value,
+                deadColor           : '#FFFFFF',
+                aliveColor          : '#000000',
+                borderColor         : '#4878B8',
+            });
+
+            $$.registerListener( gridSize , 'keyup', function ( e ) {
+                if ( e.which == 13 || e.keyCode == 13 ) {
+                    $$.reinit ( gridSize.value );
+                }
+            }, false );
+
+            $$.start ();
+            
+        </script>
+    </body>
+</html>
