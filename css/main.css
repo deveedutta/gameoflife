@@ -79,3 +79,25 @@
             width: 40px;
         }
 
+
+#gameCanvas {
+    width: 99%;
+    margin: 10px auto;
+    height: 100%;
+    text-align: center;
+}
+
+    #gameCanvas > table {
+        border: 1px solid #ccc;
+        
+    }
+
+        #gameCanvas > table > tr > td {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+        }
+
+            #gameCanvas > table > tr > td.active {
+                background: #888;
+            }
