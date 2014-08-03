@@ -59,8 +59,8 @@ var $$ = $$ || null;  //framework name '$$'
         
         _timeout = setInterval( function () {
 //            try {
-                for ( var X = 1; X < _options.gridSize-1 ; X++ ) {
-                    for ( var Y = 1; Y < _options.gridSize-1 ; Y++ )  {
+                for ( var X = 0; X < _options.gridSize ; X++ ) {
+                    for ( var Y = 0; Y < _options.gridSize ; Y++ )  {
                         count = countNeighbors ( X, Y );
                         
                         if ( count < 2 || count > 3 ) {
@@ -88,39 +88,42 @@ var $$ = $$ || null;  //framework name '$$'
     
     function countNeighbors ( X, Y ) {
         var count;
-        if ( X == 0 ) {
-            count = 
-            //CELLS on TOP ROW 
-            _life [X-1][Y-1]
-        +   _life [X-1][Y]
-        +   _life [X-1][Y+1]
-
-        //CELLS on SAME ROW
-        +   _life [X][Y-1]
-        +   _life [X][Y+1]
-        
-        //CELLS on BOTTOM ROW
-        +   _life [X+1][Y-1]
-        +   _life [X+1][Y]
-        +   _life [X+1][Y+1]
-        
-        }
+        var S = _options.gridSize * 1;
+          
         count = 
             //CELLS on TOP ROW 
-            _life [X-1][Y-1]
-        +   _life [X-1][Y]
-        +   _life [X-1][Y+1]
+            ( X > 0 && Y > 0  )     && ( _life [X-1][Y-1] ) || 0
+        +   ( X > 0           )     && ( _life [X-1][Y]   ) || 0
+        +   ( X > 0 && Y < S-1)     && ( _life [X-1][Y+1] ) || 0
 
         //CELLS on SAME ROW
-        +   _life [X][Y-1]
-        +   _life [X][Y+1]
+        +   ( Y > 0 )               && ( _life [X][Y-1]   ) || 0
+        +   ( Y < S-1 )             && ( _life [X][Y+1]   ) || 0
         
         //CELLS on BOTTOM ROW
-        +   _life [X+1][Y-1]
-        +   _life [X+1][Y]
-        +   _life [X+1][Y+1]
+        +   ( X < S-1 && Y > 0 )    && ( _life [X+1][Y-1] ) || 0
+        +   ( X < S-1 )             && ( _life [X+1][Y]   ) || 0
+        +   ( X < S-1 && Y < S-1 )  && ( _life [X+1][Y+1] ) || 0
         
         ;
+
+
+//        count = 
+//            //CELLS on TOP ROW 
+//            _life [X-1][Y-1]
+//        +   _life [X-1][Y]
+//        +   _life [X-1][Y+1]
+//
+//        //CELLS on SAME ROW
+//        +   _life [X][Y-1]
+//        +   _life [X][Y+1]
+//        
+//        //CELLS on BOTTOM ROW
+//        +   _life [X+1][Y-1]
+//        +   _life [X+1][Y]
+//        +   _life [X+1][Y+1]
+//        
+//        ;
         return count;
     }
     
@@ -168,6 +171,7 @@ var $$ = $$ || null;  //framework name '$$'
                 tr.appendChild ( td );
 
                 _life [ i ][ j ] = 0;
+//                _life [ i ][ j ] = undefined;
                 _cell [ 'td-' + i +',' + j ] = td;
                 
                 
