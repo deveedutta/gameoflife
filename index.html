@@ -15,18 +15,24 @@
             </div>   
             
             <button id="startAnimation">start</button>
+            <button id="clearGrid">clear</button>
             
+<!--
             <ul class="cf" id="nav">
                 <li><a id="noOfGrids" href="javascript: void 0">50</a></li>
                 <li><a id="timeElapsed" href="javascript: void 0">Time Elapsed</a></li>
                 <li><a href="javascript: void 0">Some Link</a></li>
                 <li><a href="javascript: void 0">Some other link</a></li>
             </ul>
+-->
         </div>
+
         
         <div id="gameCanvas"></div>
         
-<!--        <script async src="js/plugin.js"></script> NOT WORTH IT -->
+        <div id="timerTag">0 ms</div>
+        
+
         <script src="js/plugin.js"></script>
 
         <script>
@@ -35,6 +41,8 @@
             ,   startAnimation      = document.querySelector('#startAnimation')
             ,   animationStarted    = false
             ,   gridSize            = document.querySelector('#gridsize')
+            ,   clearGrid           = document.querySelector('#clearGrid')
+            ,   timerTag            = document.querySelector('#timerTag')
             
             ;
 
@@ -44,12 +52,19 @@
                 deadColor           : '#FFFFFF',
                 aliveColor          : '#000000',
                 borderColor         : '#4878B8',
+                timerTag            : timerTag,
             });
 
             $$.registerListener( gridSize , 'keyup', function ( e ) {
                 if ( e.which == 13 || e.keyCode == 13 ) {
                     $$.reinit ( gridSize.value );
                 }
+            }, false );
+
+            
+            $$.registerListener( clearGrid , 'click', function ( e ) {
+                animationStarted = $$.clear();
+                startAnimation.innerHTML = 'start';
             }, false );
 
             
@@ -61,8 +76,7 @@
                 }
                 else {
                     this.innerHTML = 'start';
-                    animationStarted = false;
-                    $$.stop();
+                    animationStarted = $$.stop();
                 }
             }, false );
             

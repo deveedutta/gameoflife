@@ -79,7 +79,7 @@
             width: 40px;
         }
 
-#startAnimation {
+#startAnimation, #clearGrid {
     border: 1px solid;
     border-color: #cdced0 #c5c6c8 #b6b7b9;
     background: #f6f7f8;
@@ -113,3 +113,13 @@
             #gameCanvas > table > tr > td.active {
                 background: #888;
             }
+
+
+#timerTag {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    background: rgba( 0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+}
