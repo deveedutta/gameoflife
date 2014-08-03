@@ -61,16 +61,17 @@ var $$ = $$ || null;  //framework name '$$'
 //            try {
                 for ( var X = 0; X < _options.gridSize ; X++ ) {
                     for ( var Y = 0; Y < _options.gridSize ; Y++ )  {
+                        
                         count = countNeighbors ( X, Y );
                         
-                        if ( count < 2 || count > 3 ) {
+                        if ( _life [X][Y] == 1 && ( count < 2 || count > 3 ) ) {                // Any live-cell will die if neighbor count is < 2 or > 3
 
-                            _life [X][Y] = 0;
-                            (_cell[ 'td-' + X + ',' + Y]).setAttribute('class', '');
+                            _life [X][Y] = 0;                                                   // Kill the cell
+                            (_cell[ 'td-' + X + ',' + Y]).setAttribute('class', '');            // Kill the table's td
 
-                        } else {
+                        } else if ( _life [X][Y] == 0 && count == 3 ){                          // But if a dead cell has exactly 3 neighbors
                             
-                            _life [X][Y] = 1;
+                            _life [X][Y] = 1;                                                   // It resurrects ( Creepy Horror Story : Will sure post this on reddit/shortscarystories/)
                             (_cell[ 'td-' + X + ',' + Y]).setAttribute('class', 'active');
                             
                         }
@@ -80,7 +81,7 @@ var $$ = $$ || null;  //framework name '$$'
 //            catch ( error ) {
 //                clearInterval( timeout );
 //            }
-        }, 400);
+        }, 700);
         
         return true;
     }
@@ -92,21 +93,25 @@ var $$ = $$ || null;  //framework name '$$'
           
         count = 
             //CELLS on TOP ROW 
-            ( X > 0 && Y > 0  )     && ( _life [X-1][Y-1] ) || 0
-        +   ( X > 0           )     && ( _life [X-1][Y]   ) || 0
-        +   ( X > 0 && Y < S-1)     && ( _life [X-1][Y+1] ) || 0
+            _life   [(X-1+S)%S]     [(Y-1+S)%S]
+        +   _life   [(X-1+S)%S]     [Y]
+        +   _life   [(X-1+S)%S]     [(Y+1+S)%S]
 
         //CELLS on SAME ROW
-        +   ( Y > 0 )               && ( _life [X][Y-1]   ) || 0
-        +   ( Y < S-1 )             && ( _life [X][Y+1]   ) || 0
+        +   _life [X][(Y-1+S)%S]
+        +   _life [X][(Y+1+S)%S]
         
         //CELLS on BOTTOM ROW
-        +   ( X < S-1 && Y > 0 )    && ( _life [X+1][Y-1] ) || 0
-        +   ( X < S-1 )             && ( _life [X+1][Y]   ) || 0
-        +   ( X < S-1 && Y < S-1 )  && ( _life [X+1][Y+1] ) || 0
+        +   _life [(X+1+S)%S]       [(Y-1+S)%S]
+        +   _life [(X+1+S)%S]       [Y]
+        +   _life [(X+1+S)%S]       [(Y+1+S)%S]
         
         ;
-
+        /*
+        * Credits : http://www.julianpulgarin.com/canvaslife/
+        * I tried hard to deal with the 'undefined' out-of-bound array index.
+        * It was harder than I anticipated. Julian's code came to rescue.
+        */
 
 //        count = 
 //            //CELLS on TOP ROW 
@@ -171,7 +176,6 @@ var $$ = $$ || null;  //framework name '$$'
                 tr.appendChild ( td );
 
                 _life [ i ][ j ] = 0;
-//                _life [ i ][ j ] = undefined;
                 _cell [ 'td-' + i +',' + j ] = td;
                 
                 
@@ -183,7 +187,6 @@ var $$ = $$ || null;  //framework name '$$'
                     var Y = id.split(',')[1] * 1;
                     
                     _life [ X ][ Y ] = 1;
-//                    console.log(_life);
                 }, false);
                 
             }
