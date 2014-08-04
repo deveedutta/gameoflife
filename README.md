@@ -4,9 +4,11 @@ Game of Life
 Cross browser working model for [Jon Conway's Game of Life](http://en.wikipedia.org/wiki/Conway's_Game_of_Life)
 -----------------------------------------------------
 
-* Declaration *
+*Declaration*
 
 I took help from [Julian Pulgarin](http://www.julianpulgarin.com/canvaslife/)'s code to understand how the algorithm works and how the code should behave. Honestly, I couldn't have accomplished this in this short while without his publication. My code is not plagiarized because I've applied my 'custom' stupidity to solve problems here.
+
+Additionally, I wrote this code purely for employment purposes. Therefore, anyone willing to fork or modify it, then please be careful before making any pull requests.
 
 Steps to use plugin
 -------------------
