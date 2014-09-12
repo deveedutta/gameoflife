@@ -47,5 +47,8 @@ Call init
 Use *registerListener* to register event listeners
 
 	$$.registerListener( HTMLElement , 'eventName', eventHandlerFunction, bubbleTrueORfalse );
-            
-            
+
+
+Compatility
+-----------
+I created this using table > tr > td. I think it should work in every browser. If you find any issues, please notify me.
