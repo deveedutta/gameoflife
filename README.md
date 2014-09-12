@@ -32,7 +32,7 @@ Running
 Steps to use
 ------------
 
-1. Initialize reference to html variables
+Initialize reference to html variables
 
 	var 
 		canvas              = document.querySelector('#gameCanvas')
@@ -40,11 +40,11 @@ Steps to use
 	,   animationStarted    = false
 	,   gridSize            = document.querySelector('#gridsize')
 
-2. Call init
+Call init
 
 	$$.init ( canvas, { ... } );
 
-3. Use *registerListener* to register event listeners
+Use *registerListener* to register event listeners
 
 	$$.registerListener( HTMLElement , 'eventName', eventHandlerFunction, bubbleTrueORfalse );
             
